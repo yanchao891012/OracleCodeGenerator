@@ -1,0 +1,142 @@
+﻿<Window x:Class="OracleCodeGenerator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OracleCodeGenerator"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Custom="http://www.galasoft.ch/mvvmlight"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1100" WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Icon="Icon/father.ico">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/OracleCodeGenerator;component/StyleDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border Style="{StaticResource BorderStyle}" BorderThickness="2" Background="{StaticResource BlueThemePageBackground}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="LightGray">
+                <TextBlock Text="Creator for Oracle database" FontSize="25" FontWeight="Black" Style="{StaticResource TextBlockStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"/>
+            </Grid>
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" DataContext="{Binding ConnectionVo}" Visibility="{Binding DataContext.IsVisibility,RelativeSource={RelativeSource AncestorType=Window,Mode=FindAncestor}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="5" Style="{StaticResource BorderStyle}"/>
+
+                    <Line Grid.Row="0" Grid.ColumnSpan="5" Style="{StaticResource HorLineStyle}"/>
+
+                    <Line Grid.Column="0" Grid.RowSpan="2" Style="{StaticResource VerLineStyle}"/>
+                    <Line Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource VerLineStyle}"/>
+                    <Line Grid.Column="2" Grid.RowSpan="2" Style="{StaticResource VerLineStyle}"/>
+                    <Line Grid.Column="3" Grid.RowSpan="2" Style="{StaticResource VerLineStyle}"/>
+                    <Line Grid.Column="4" Grid.RowSpan="2" Style="{StaticResource VerLineStyle}"/>
+
+                    <TextBlock Text="IP" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Text="{Binding ConnIP}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock Text="Port" Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Text="{Binding ConnPort}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock Text="SID" Grid.Row="0" Grid.Column="2" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Text="{Binding ConnSid}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock Text="User" Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Text="{Binding ConnUser}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}"/>
+
+                    <TextBlock Text="PassWord" Grid.Row="0" Grid.Column="4" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Text="{Binding ConnPwd}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}"/>
+                </Grid>
+
+                <Button Content="连接" Command="{Binding LinkCommand}" Grid.Row="1" Visibility="{Binding IsVisibility}" Style="{StaticResource ButtonStyleForSumbit}"/>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TreeView x:Name="tv" ItemsSource="{Binding TreeList}" BorderBrush="{StaticResource BlueThemeBordBursh}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image VerticalAlignment="Center" Source="{Binding Icon}" Width="18" Height="18" Margin="0,2"/>
+                                    <TextBlock x:Name="tb" VerticalAlignment="Center" Text="{Binding ChildrenName}" Style="{StaticResource TextBlockStyle}"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedItemChanged">
+                                <Custom:EventToCommand Command="{Binding SelectChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TreeView},Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TreeView>
+
+                    <DataGrid Grid.Column="1" ItemsSource="{Binding TableNameGridList}" SelectedItem="{Binding SelectTableName}" Visibility="{Binding VisibilityName}" HorizontalAlignment="Stretch" CanUserAddRows="False" AutoGenerateColumns="False" Style="{StaticResource GreenThemeDataGridStyle}">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTipService.ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=Content.Text}"/>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Schema" Width="*" Binding="{Binding Schema,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Type" Width="*" Binding="{Binding Type,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Table Name" Width="*" Binding="{Binding Name,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Comments" Width="*" Binding="{Binding Comments,Mode=OneWay}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <DataGrid Grid.Column="1" ItemsSource="{Binding TableContentGridList}" Visibility="{Binding VisibilityContent}" HorizontalAlignment="Stretch" CanUserAddRows="False" AutoGenerateColumns="False" Style="{StaticResource GreenThemeDataGridStyle}">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTipService.ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=Content.Text}"/>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Column Name" Width="*" Binding="{Binding Name,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Column Comments" Width="*" Binding="{Binding Comments,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Type" Width="*" Binding="{Binding Type,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="Nullable" Width="*" Binding="{Binding Nullable,Mode=OneWay}"/>
+                            <DataGridTextColumn Header="DataLength" Width="*" Binding="{Binding DataLength,Mode=OneWay}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+                <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock Text="NameSpace" FontStyle="Italic" FontWeight="Bold" Foreground="Red" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBox Width="150" Text="{Binding Ns}" Style="{StaticResource TextBoxStyle}" Margin="5,0,100,0"/>
+                    <Button Content="创建普通VO" Command="{Binding CreateVoNoINotifyPropertyChangedCommand}" CommandParameter="{Binding ElementName=tv,Path=SelectedItem}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
+                    <Button Content="创建通知VO" Command="{Binding CreateVoWithINotifyPropertyChangedCommand}" CommandParameter="{Binding ElementName=tv,Path=SelectedItem}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
+                    <Button Content="创建通知类" Command="{Binding CreateINotifyPropertyChangedCommand}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
+                    <Button Content="关闭" Command="{Binding CloseCommand}"  Style="{StaticResource ButtonStyleForCancel}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
