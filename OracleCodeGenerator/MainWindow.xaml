@@ -93,7 +93,7 @@
                         </TreeView.ItemTemplate>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectedItemChanged">
-                                <Custom:EventToCommand Command="{Binding SelectChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TreeView},Path=SelectedItem}"/>
+                                <i:InvokeCommandAction Command="{Binding SelectChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TreeView},Path=SelectedItem}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TreeView>
@@ -130,7 +130,8 @@
 
                 <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Text="NameSpace" FontStyle="Italic" FontWeight="Bold" Foreground="Red" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBox Width="150" Text="{Binding Ns}" Style="{StaticResource TextBoxStyle}" Margin="5,0,100,0"/>
+                    <TextBox Width="150" Text="{Binding Ns}" Style="{StaticResource TextBoxStyle}" Margin="5,0,100,0" />
+                    <CheckBox Content="转换类型" IsChecked="{Binding IsChecked}" Style="{StaticResource CheckBoxStyle}" Margin="0,0,30,0" FontWeight="Bold" Foreground="Red"/>
                     <Button Content="创建普通VO" Command="{Binding CreateVoNoINotifyPropertyChangedCommand}" CommandParameter="{Binding ElementName=tv,Path=SelectedItem}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
                     <Button Content="创建通知VO" Command="{Binding CreateVoWithINotifyPropertyChangedCommand}" CommandParameter="{Binding ElementName=tv,Path=SelectedItem}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
                     <Button Content="创建通知类" Command="{Binding CreateINotifyPropertyChangedCommand}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>

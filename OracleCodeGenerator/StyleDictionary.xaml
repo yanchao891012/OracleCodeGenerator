@@ -29,6 +29,44 @@
         <Setter Property="Margin" Value="5,8,0,8"/>
     </Style>
 
+    <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="False" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource CheckBoxFocusVisual}" />
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="IsChecked" Value="False"/>
+        <Setter Property="Margin" Value="0,20"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Height="{TemplateBinding Height}" Width="{TemplateBinding Height}">
+                            <Rectangle x:Name="CheckBoxRectangle" Fill="LightSkyBlue" Opacity="0.3" RadiusY="5" RadiusX="5"/>
+                            <Rectangle x:Name="CheckBoxRectangleOut" Stroke="#FF06DAD1" StrokeThickness="1" RadiusY="5" RadiusX="5"/>
+                            <Grid x:Name="CheckedMark" Width="20" Height="20" Visibility="Collapsed">
+                                <Path SnapsToDevicePixels="False" StrokeThickness="3" Data="M1,9 L10,17" Stroke="White"/>
+                                <Path SnapsToDevicePixels="False" StrokeThickness="3" Data="M8,17 L20,4" Stroke="White"/>
+                            </Grid>
+                        </Grid>
+                        <TextBlock Grid.Column="1" Text="{TemplateBinding Content}" FontSize="16" Foreground="#00C403" VerticalAlignment="Center" Margin="14,0,0,0"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckedMark" Property="Visibility" Value="Visible"></Setter>
+                            <Setter TargetName="CheckBoxRectangle" Property="Fill" Value="#FF00A8E0"></Setter>
+                            <Setter TargetName="CheckBoxRectangle" Property="Opacity" Value="1"></Setter>
+                            <Setter TargetName="CheckBoxRectangleOut" Property="Stroke" Value="Transparent"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="Height" Value="28"/>
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>

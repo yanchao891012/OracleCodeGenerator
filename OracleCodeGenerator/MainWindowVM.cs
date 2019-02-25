@@ -18,7 +18,7 @@ namespace OracleCodeGenerator
         {
             //创建文件夹
             CreateVo.CreateDirectory();
-            SetConnVo();
+            SetInit();
         }
 
         #region 字段
@@ -236,15 +236,52 @@ namespace OracleCodeGenerator
                 RaisePropertyChanged("VisibilityContent");
             }
         }
+
+        private Dictionary<string, string> typesDic = new Dictionary<string, string>();
+        /// <summary>
+        /// 数据类型的键值对集合
+        /// </summary>
+        public Dictionary<string, string> TypesDic
+        {
+            get
+            {
+                return typesDic;
+            }
+
+            set
+            {
+                typesDic = value;
+                RaisePropertyChanged("TypesDic");
+            }
+        }
+
+        private bool isChecked = true;
+        /// <summary>
+        /// 是否选中
+        /// </summary>
+        public bool IsChecked
+        {
+            get
+            {
+                return isChecked;
+            }
+
+            set
+            {
+                isChecked = value;
+                RaisePropertyChanged("IsChecked");
+            }
+        }
         #endregion
 
         #region 函数
         /// <summary>
         /// 给连接的东西赋值
         /// </summary>
-        private void SetConnVo()
+        private void SetInit()
         {
             ConnectionVo = XMLHelper.ReadXML();
+            TypesDic = XMLHelper.GetTypes();
         }
         /// <summary>
         /// DataTable转换到List
@@ -445,11 +482,11 @@ namespace OracleCodeGenerator
                       if (p.ParentName.Equals(p.ChildrenName) && !string.IsNullOrEmpty(SelectTableName.Name))
                       {
                           GetTableContentList(p.ParentName, SelectTableName.Name);
-                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Name, TableContentGridList.ToList());
+                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Name, TableContentGridList.ToList(), TypesDic, IsChecked);
                       }
                       else
-                      {                          
-                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", p.ChildrenName, TableContentGridList.ToList());
+                      {
+                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", p.ChildrenName, TableContentGridList.ToList(), TypesDic, IsChecked);
                       }
                   });
             }
@@ -470,11 +507,11 @@ namespace OracleCodeGenerator
                     if (p.ParentName.Equals(p.ChildrenName) && !string.IsNullOrEmpty(SelectTableName.Name))
                     {
                         GetTableContentList(p.ParentName, SelectTableName.Name);
-                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Name, TableContentGridList.ToList());
+                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Name, TableContentGridList.ToList(), TypesDic, IsChecked);
                     }
                     else
                     {
-                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", p.ChildrenName, TableContentGridList.ToList());
+                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", p.ChildrenName, TableContentGridList.ToList(), TypesDic, IsChecked);
                     }
 
                 });

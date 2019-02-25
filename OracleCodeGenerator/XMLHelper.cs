@@ -19,8 +19,8 @@ namespace OracleCodeGenerator
         /// <summary>
         /// 数据连接路径
         /// </summary>
-        static string path = AppDomain.CurrentDomain.BaseDirectory + "ConnDb.xml";
-
+        static string ConnPath = AppDomain.CurrentDomain.BaseDirectory + "ConnDb.xml";
+        static string TypePath = AppDomain.CurrentDomain.BaseDirectory + "TypeXML.xml";
         /// <summary>
         /// 创建XML节点
         /// </summary>
@@ -58,7 +58,7 @@ namespace OracleCodeGenerator
             xe.AppendChild(xc5);
 
             xmlDoc.AppendChild(xe);
-            xmlDoc.Save(path);
+            xmlDoc.Save(ConnPath);
         }
         /// <summary>
         /// 读取XML内容赋值给连接
@@ -67,10 +67,10 @@ namespace OracleCodeGenerator
         public static ConnVo ReadXML()
         {
             ConnVo vo = new ConnVo();
-            if (File.Exists(path))
+            if (File.Exists(ConnPath))
             {
                 XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(path);
+                xmlDoc.Load(ConnPath);
                 XmlNodeList list = xmlDoc.SelectSingleNode("Conn").ChildNodes;
                 vo.ConnIP = list[0].InnerText;
                 vo.ConnPort = list[1].InnerText;
@@ -79,6 +79,25 @@ namespace OracleCodeGenerator
                 vo.ConnPwd = list[4].InnerText;
             }
             return vo;
+        }
+        /// <summary>
+        /// 获取转换类型
+        /// </summary>
+        /// <returns></returns>
+        public static Dictionary<string, string> GetTypes()
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            if (File.Exists(TypePath))
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(TypePath);
+                XmlNodeList list = xmlDoc.SelectNodes("//Type");
+                foreach (XmlElement item in list)
+                {
+                    dic.Add(item.Attributes["key"].Value.ToString(), item.InnerText);
+                }
+            }
+            return dic;
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+  <Type key="number">int</Type>
+  <Type key="char">string</Type>
+  <Type key="varchar2">string</Type>
+  <Type key="varchar">string</Type>
+  <Type key="nvarchar2">string</Type>
+  <Type key="nvarchar">string</Type>
+  <Type key="date">DateTime</Type>
+</Types>

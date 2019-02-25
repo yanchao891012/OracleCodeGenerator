@@ -66,13 +66,15 @@ namespace OracleCodeGenerator
         /// <param name="NameSpace">命名空间</param>
         /// <param name="name">文件名</param>
         /// <param name="listName">列表</param>
-        public static void CreateVoNoINotifyPropertyChanged(string NameSpace,string name,List<TableVo> listName)
+        /// <param name="dic">类型转换集合</param>
+        /// <param name="iscov">是否进行类型转换</param>
+        public static void CreateVoNoINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             try
             {
                 FileStream fs = new FileStream(pathVo1 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
-                sw.Write(CreateCSNoINotifyPropertyChanged(NameSpace, name, listName));
+                sw.Write(CreateCSNoINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
                 sw.Flush();
                 sw.Close();
                 fs.Close();
@@ -90,13 +92,15 @@ namespace OracleCodeGenerator
         /// <param name="NameSpace">命名空间</param>
         /// <param name="name">文件名</param>
         /// <param name="listName">列表</param>
-        public static void CreateVoWithINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName)
+        /// <param name="dic">类型转换集合</param>
+        /// <param name="iscov">是否进行类型转换</param>
+        public static void CreateVoWithINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             try
             {
                 FileStream fs = new FileStream(pathVo2 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
-                sw.Write(CreateCSWithINotifyPropertyChanged(NameSpace, name, listName));
+                sw.Write(CreateCSWithINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
                 sw.Flush();
                 sw.Close();
                 fs.Close();
@@ -106,7 +110,7 @@ namespace OracleCodeGenerator
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
         /// <summary>
         /// 创建不含通知机制的CS文件
@@ -114,8 +118,10 @@ namespace OracleCodeGenerator
         /// <param name="NameSpace">命名空间</param>
         /// <param name="name">文件名</param>
         /// <param name="listName">列表</param>
+        /// <param name="dic">类型转换集合</param>
+        /// <param name="iscov">是否进行类型转换</param>
         /// <returns></returns>
-        private static string CreateCSNoINotifyPropertyChanged(string NameSpace,string name,List<TableVo> listName)
+        private static string CreateCSNoINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             string content = "";
             content += "using System;\r\n";
@@ -127,13 +133,19 @@ namespace OracleCodeGenerator
             content += "{\r\n";
             content += "    public class " + "" + name + "" + "\r\n";
             content += "    {\r\n";
-            foreach(TableVo s in listName)
+            foreach (TableVo s in listName)
             {
-                content += "        private string " + s.Name.ToLower() + ";" + "\r\n";
+                if (iscov)
+                    content += "        private " + dic[s.Type.ToLower()] + " " + s.Name.ToLower() + ";" + "\r\n";
+                else
+                    content += "        private string " + s.Name.ToLower() + ";" + "\r\n";
                 content += "        /// <summary>\r\n";
                 content += "        /// " + s.Comments + "\r\n";
                 content += "        /// </summary>\r\n";
-                content += "        public string " + s.Name.Substring(0, 1) + s.Name.Substring(1, s.Name.Length-1).ToLower() + "\r\n";
+                if (iscov)
+                    content += "        public " + dic[s.Type.ToLower()] + " " + s.Name.Substring(0, 1) + s.Name.Substring(1, s.Name.Length - 1).ToLower() + "\r\n";
+                else
+                    content += "        public string " + s.Name.Substring(0, 1) + s.Name.Substring(1, s.Name.Length - 1).ToLower() + "\r\n";
                 content += "        {\r\n";
                 content += "            get\r\n";
                 content += "            {\r\n";
@@ -157,8 +169,10 @@ namespace OracleCodeGenerator
         /// <param name="NameSpace">命名空间</param>
         /// <param name="name">文件名</param>
         /// <param name="listName">列表</param>
+        /// <param name="dic">类型转换集合</param>
+        /// <param name="iscov">是否进行类型转换</param>
         /// <returns></returns>
-        private static string CreateCSWithINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName)
+        private static string CreateCSWithINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             string content = "";
             content += "using System;\r\n";
@@ -172,11 +186,17 @@ namespace OracleCodeGenerator
             content += "    {\r\n";
             foreach (TableVo s in listName)
             {
-                content += "        private string " + s.Name.ToLower() + ";" + "\r\n";
+                if (iscov)
+                    content += "        private " + dic[s.Type.ToLower()] + " " + s.Name.ToLower() + ";" + "\r\n";
+                else
+                    content += "        private string " + s.Name.ToLower() + ";" + "\r\n";
                 content += "        /// <summary>\r\n";
                 content += "        /// " + s.Comments + "\r\n";
                 content += "        /// </summary>\r\n";
-                content += "        public string " + s.Name.Substring(0, 1) + s.Name.Substring(1, s.Name.Length - 1).ToLower() + "\r\n";
+                if (iscov)
+                    content += "        public " + dic[s.Type.ToLower()] + " " + s.Name.Substring(0, 1) + s.Name.Substring(1, s.Name.Length - 1).ToLower() + "\r\n";
+                else
+                    content += "        public string " + s.Name.Substring(0, 1) + s.Name.Substring(1, s.Name.Length - 1).ToLower() + "\r\n";
                 content += "        {\r\n";
                 content += "            get\r\n";
                 content += "            {\r\n";
