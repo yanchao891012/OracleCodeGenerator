@@ -73,6 +73,7 @@
     <Compile Include="ObjectNotifyPropertyChanged.cs" />
     <Compile Include="PropertyNodeItem.cs" />
     <Compile Include="TableVo.cs" />
+    <Compile Include="XMLHelper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -244,11 +244,7 @@ namespace OracleCodeGenerator
         /// </summary>
         private void SetConnVo()
         {
-            ConnectionVo.ConnIP = "10.254.2.11";
-            ConnectionVo.ConnPort = "1521";
-            ConnectionVo.ConnSid = "cskh";
-            ConnectionVo.ConnUser = "swzg";
-            ConnectionVo.ConnPwd = "swzg123";
+            ConnectionVo = XMLHelper.ReadXML();
         }
         /// <summary>
         /// DataTable转换到List
@@ -408,6 +404,7 @@ namespace OracleCodeGenerator
                           DataTableToList(DBHelper.ReturnOwner);
                           SetTree(OrgList, OwnerList);
                           IsVisibility = Visibility.Collapsed;
+                          XMLHelper.CreateXML(ConnectionVo.ConnIP, ConnectionVo.ConnPort, ConnectionVo.ConnSid, ConnectionVo.ConnUser, ConnectionVo.ConnPwd);
                       }
                       else
                       {

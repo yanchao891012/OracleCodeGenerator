@@ -45,3 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/OracleCodeGenerator/bin/Debug
+/OracleCodeGenerator/obj/Debug
+/.vs/OracleCodeGenerator/v15
