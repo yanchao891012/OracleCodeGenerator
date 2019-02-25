@@ -72,6 +72,7 @@ namespace OracleCodeGenerator
         {
             try
             {
+                name = name.Substring(0, 1) + name.Substring(1, name.Length - 1).ToLower();
                 FileStream fs = new FileStream(pathVo1 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(CreateCSNoINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
@@ -98,6 +99,7 @@ namespace OracleCodeGenerator
         {
             try
             {
+                name = name.Substring(0, 1) + name.Substring(1, name.Length - 1).ToLower();
                 FileStream fs = new FileStream(pathVo2 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(CreateCSWithINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
