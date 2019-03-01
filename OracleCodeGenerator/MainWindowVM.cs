@@ -482,11 +482,12 @@ namespace OracleCodeGenerator
                       if (p.ParentName.Equals(p.ChildrenName) && !string.IsNullOrEmpty(SelectTableName.Name))
                       {
                           GetTableContentList(p.ParentName, SelectTableName.Name);
-                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Name, TableContentGridList.ToList(), TypesDic, IsChecked);
+                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Comments, SelectTableName.Name, TableContentGridList.ToList(), TypesDic, IsChecked);
                       }
                       else
                       {
-                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", p.ChildrenName, TableContentGridList.ToList(), TypesDic, IsChecked);
+                          GetTableNameList(p.ParentName);
+                          CreateVo.CreateVoNoINotifyPropertyChanged(Ns != "" ? Ns : "test", TableNameGridList.FirstOrDefault(m => m.Name == p.ChildrenName).Comments, p.ChildrenName, TableContentGridList.ToList(), TypesDic, IsChecked);
                       }
                   });
             }
@@ -507,11 +508,12 @@ namespace OracleCodeGenerator
                     if (p.ParentName.Equals(p.ChildrenName) && !string.IsNullOrEmpty(SelectTableName.Name))
                     {
                         GetTableContentList(p.ParentName, SelectTableName.Name);
-                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Name, TableContentGridList.ToList(), TypesDic, IsChecked);
+                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", SelectTableName.Comments, SelectTableName.Name, TableContentGridList.ToList(), TypesDic, IsChecked);
                     }
                     else
                     {
-                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", p.ChildrenName, TableContentGridList.ToList(), TypesDic, IsChecked);
+                        GetTableNameList(p.ParentName);
+                        CreateVo.CreateVoWithINotifyPropertyChanged(Ns != "" ? Ns : "test", TableNameGridList.FirstOrDefault(m => m.Name == p.ChildrenName).Comments, p.ChildrenName, TableContentGridList.ToList(), TypesDic, IsChecked);
                     }
 
                 });

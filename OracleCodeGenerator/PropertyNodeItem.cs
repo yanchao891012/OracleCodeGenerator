@@ -83,12 +83,6 @@ namespace OracleCodeGenerator
             }
         }
 
-        //public string ParentIcon { get; set; }
-        //public string ChildrenIcon { get; set; }
-        //public string ParentName { get; set; }
-        //public string ChildrenName { get; set; }        
-        //public bool IsExpanded { get; set; }
-        //public List<PropertyNodeItem> Children { get; set; }
         public PropertyNodeItem()
         {
             Children = new List<PropertyNodeItem>();

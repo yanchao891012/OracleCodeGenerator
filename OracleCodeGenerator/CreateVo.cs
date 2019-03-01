@@ -71,7 +71,7 @@ namespace OracleCodeGenerator
         /// <param name="listName">列表</param>
         /// <param name="dic">类型转换集合</param>
         /// <param name="iscov">是否进行类型转换</param>
-        public static void CreateVoNoINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
+        public static void CreateVoNoINotifyPropertyChanged(string NameSpace, string comment, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace OracleCodeGenerator
                 }
                 FileStream fs = new FileStream(pathVo1 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
-                sw.Write(CreateCSNoINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
+                sw.Write(CreateCSNoINotifyPropertyChanged(NameSpace, comment, name, listName, dic, iscov));
                 sw.Flush();
                 sw.Close();
                 fs.Close();
@@ -103,7 +103,7 @@ namespace OracleCodeGenerator
         /// <param name="listName">列表</param>
         /// <param name="dic">类型转换集合</param>
         /// <param name="iscov">是否进行类型转换</param>
-        public static void CreateVoWithINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
+        public static void CreateVoWithINotifyPropertyChanged(string NameSpace, string comment, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace OracleCodeGenerator
                 }
                 FileStream fs = new FileStream(pathVo2 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
-                sw.Write(CreateCSWithINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
+                sw.Write(CreateCSWithINotifyPropertyChanged(NameSpace, comment, name, listName, dic, iscov));
                 sw.Flush();
                 sw.Close();
                 fs.Close();
@@ -136,7 +136,7 @@ namespace OracleCodeGenerator
         /// <param name="dic">类型转换集合</param>
         /// <param name="iscov">是否进行类型转换</param>
         /// <returns></returns>
-        private static string CreateCSNoINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
+        private static string CreateCSNoINotifyPropertyChanged(string NameSpace, string comment, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             string content = "";
             content += "using System;\r\n";
@@ -146,6 +146,9 @@ namespace OracleCodeGenerator
             content += "\r\n";
             content += "namespace " + "" + NameSpace + "" + "\r\n";
             content += "{\r\n";
+            content += "    /// <summary>\r\n";
+            content += "    /// " + comment + "\r\n";
+            content += "    /// </summary>\r\n";
             content += "    public class " + "" + name + "" + "\r\n";
             content += "    {\r\n";
             foreach (TableVo s in listName)
@@ -187,7 +190,7 @@ namespace OracleCodeGenerator
         /// <param name="dic">类型转换集合</param>
         /// <param name="iscov">是否进行类型转换</param>
         /// <returns></returns>
-        private static string CreateCSWithINotifyPropertyChanged(string NameSpace, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
+        private static string CreateCSWithINotifyPropertyChanged(string NameSpace, string comment, string name, List<TableVo> listName, Dictionary<string, string> dic, bool iscov)
         {
             string content = "";
             content += "using System;\r\n";
@@ -197,6 +200,9 @@ namespace OracleCodeGenerator
             content += "\r\n";
             content += "namespace " + "" + NameSpace + "" + "\r\n";
             content += "{\r\n";
+            content += "    /// <summary>\r\n";
+            content += "    /// " + comment + "\r\n";
+            content += "    /// </summary>\r\n";
             content += "    public class " + "" + name + "" + ":ObjectNotifyPropertyChanged" + "\r\n";
             content += "    {\r\n";
             foreach (TableVo s in listName)
