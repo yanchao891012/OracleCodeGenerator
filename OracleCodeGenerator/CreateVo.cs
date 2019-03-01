@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace OracleCodeGenerator
@@ -15,6 +16,8 @@ namespace OracleCodeGenerator
         private static string pathVo2 = @"Dis/VoWithNotify";
         //通知类文件
         private static string path = @"Dis";
+
+        static Regex reg = new Regex("_.");
 
         /// <summary>
         /// 判断是否存在文件夹，不存在则创建
@@ -73,6 +76,11 @@ namespace OracleCodeGenerator
             try
             {
                 name = name.Substring(0, 1) + name.Substring(1, name.Length - 1).ToLower();
+                MatchCollection match = reg.Matches(name);
+                foreach (Match item in match)
+                {
+                    name = name.Replace(item.Value, item.Value.ToUpper());
+                }
                 FileStream fs = new FileStream(pathVo1 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(CreateCSNoINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
@@ -100,6 +108,11 @@ namespace OracleCodeGenerator
             try
             {
                 name = name.Substring(0, 1) + name.Substring(1, name.Length - 1).ToLower();
+                MatchCollection match = reg.Matches(name);
+                foreach (Match item in match)
+                {
+                    name = name.Replace(item.Value, item.Value.ToUpper());
+                }
                 FileStream fs = new FileStream(pathVo2 + "/" + name + ".cs", FileMode.Create);
                 StreamWriter sw = new StreamWriter(fs);
                 sw.Write(CreateCSWithINotifyPropertyChanged(NameSpace, name, listName, dic, iscov));
