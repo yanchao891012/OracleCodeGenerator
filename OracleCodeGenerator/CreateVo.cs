@@ -54,7 +54,10 @@ namespace OracleCodeGenerator
                 sw.Flush();
                 sw.Close();
                 fs.Close();
-                MessageBox.Show("ObjectNotifyPropertyChanged.cs文件生成成功！");
+                if (MessageBox.Show("ObjectNotifyPropertyChanged.cs文件生成成功，是否打开路径？", "询问", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + path);
+                }
             }
             catch (Exception ex)
             {
