@@ -128,13 +128,14 @@
                     </DataGrid>
                 </Grid>
 
-                <StackPanel Grid.Row="3" HorizontalAlignment="Center" Orientation="Horizontal">
+                <StackPanel Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal">
                     <TextBlock Text="NameSpace" FontStyle="Italic" FontWeight="Bold" Foreground="Red" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBox Width="150" Text="{Binding Ns}" Style="{StaticResource TextBoxStyle}" Margin="5,0,100,0" />
+                    <TextBox Width="150" Text="{Binding Ns}" Style="{StaticResource TextBoxStyle}" Margin="5,0,50,0" />
                     <CheckBox Content="转换类型" IsChecked="{Binding IsChecked}" Style="{StaticResource CheckBoxStyle}" Margin="0,0,30,0" FontWeight="Bold" Foreground="Red"/>
                     <Button Content="创建普通VO" Command="{Binding CreateVoNoINotifyPropertyChangedCommand}" CommandParameter="{Binding ElementName=tv,Path=SelectedItem}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
                     <Button Content="创建通知VO" Command="{Binding CreateVoWithINotifyPropertyChangedCommand}" CommandParameter="{Binding ElementName=tv,Path=SelectedItem}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
                     <Button Content="创建通知类" Command="{Binding CreateINotifyPropertyChangedCommand}" Style="{StaticResource ButtonStyleForSumbit}" Margin="0,0,30,0"/>
+                    <Button Content="断开连接" Command="{Binding ColseConnCommand}" Visibility="{Binding CloseConnVisibility,UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource ButtonStyleForCancel}" Margin="0,0,30,0"/>
                     <Button Content="关闭" Command="{Binding CloseCommand}"  Style="{StaticResource ButtonStyleForCancel}"/>
                 </StackPanel>
             </Grid>

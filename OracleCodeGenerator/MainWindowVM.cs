@@ -148,6 +148,24 @@ namespace OracleCodeGenerator
             }
         }
 
+        private Visibility closeConnVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// 关闭连接的隐藏显示
+        /// </summary>
+        public Visibility CloseConnVisibility
+        {
+            get
+            {
+                return closeConnVisibility;
+            }
+
+            set
+            {
+                closeConnVisibility = value;
+                RaisePropertyChanged("CloseConnVisibility");
+            }
+        }
+
         /// <summary>
         /// 表名选中项
         /// </summary>
@@ -442,12 +460,35 @@ namespace OracleCodeGenerator
                           SetTree(OrgList, OwnerList);
                           IsVisibility = Visibility.Collapsed;
                           XMLHelper.CreateXML(ConnectionVo.ConnIP, ConnectionVo.ConnPort, ConnectionVo.ConnSid, ConnectionVo.ConnUser, ConnectionVo.ConnPwd);
+                          CloseConnVisibility = Visibility.Visible;
                       }
                       else
                       {
                           MessageBox.Show("连接失败！");
                       }
                   });
+            }
+        }
+
+        private RelayCommand colseConnCommand;
+        /// <summary>
+        /// 关闭连接
+        /// </summary>
+        public RelayCommand ColseConnCommand
+        {
+            get
+            {
+                return colseConnCommand = new RelayCommand(() =>
+                {
+                    DBHelper.CloseConnection();
+                    IsVisibility = Visibility.Visible;
+                    TreeList.Clear();
+                    TableNameGridList.Clear();
+                    TableContentGridList.Clear();
+                    VisibilityName = Visibility.Collapsed;
+                    VisibilityContent = Visibility.Collapsed;
+                    CloseConnVisibility = Visibility.Collapsed;
+                });
             }
         }
 
@@ -546,6 +587,8 @@ namespace OracleCodeGenerator
             {
                 return selectChangedCommand = new RelayCommand<PropertyNodeItem>(p =>
                 {
+                    if (p == null)
+                        return;
                     if (p.ParentName.Equals(p.ChildrenName))
                     {
                         GetTableNameList(p.ParentName);
