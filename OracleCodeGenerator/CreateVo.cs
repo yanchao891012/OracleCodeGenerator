@@ -156,7 +156,7 @@ namespace OracleCodeGenerator
             content += "namespace " + "" + NameSpace + "" + "\r\n";
             content += "{\r\n";
             content += "    /// <summary>\r\n";
-            content += "    /// " + comment + "\r\n";
+            content += "    /// " + comment + "-------代码生成工具生成" + "\r\n";
             content += "    /// </summary>\r\n";
             content += "    public class " + "" + name + "" + "\r\n";
             content += "    {\r\n";
@@ -210,7 +210,7 @@ namespace OracleCodeGenerator
             content += "namespace " + "" + NameSpace + "" + "\r\n";
             content += "{\r\n";
             content += "    /// <summary>\r\n";
-            content += "    /// " + comment + "\r\n";
+            content += "    /// " + comment + "-------代码生成工具生成" + "\r\n";
             content += "    /// </summary>\r\n";
             content += "    public class " + "" + name + "" + ":ObjectNotifyPropertyChanged" + "\r\n";
             content += "    {\r\n";

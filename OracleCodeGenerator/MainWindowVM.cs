@@ -482,6 +482,7 @@ namespace OracleCodeGenerator
                 {
                     DBHelper.CloseConnection();
                     IsVisibility = Visibility.Visible;
+                    OrgList.Clear();
                     TreeList.Clear();
                     TableNameGridList.Clear();
                     TableContentGridList.Clear();

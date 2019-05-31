@@ -48,3 +48,8 @@ Temporary Items
 /OracleCodeGenerator/bin/Debug
 /OracleCodeGenerator/obj/Debug
 /.vs/OracleCodeGenerator/v15
+.vs/OracleCodeGenerator/v16/Server/sqlite3/storage.ide-wal
+.vs/OracleCodeGenerator/v16/Server/sqlite3/storage.ide-shm
+.vs/OracleCodeGenerator/v16/Server/sqlite3/storage.ide
+.vs/OracleCodeGenerator/v16/Server/sqlite3/db.lock
+.vs/OracleCodeGenerator/v16/.suo
